@@ -23,6 +23,21 @@ local spellHistoryBlacklist = {
 	[75] = true; -- Auto shot
 };
 
+local spellHitComboList = {
+	[100780] = true; --TigerPalm 
+    [100784] = true; --BlackoutKick
+    [107428] = true; --RisingSunKick
+    [101545] = true; --FlyingSerpentKick
+    [113656] = true; --FistsOfFury
+    [101546] = true; --SpinningCraneKick
+    [116847] = true; --RushingJadeWind
+    [152175] = true; --WhirlingDragonPunch
+    [115098] = true; --ChiWave
+    [123986] = true; --ChiBurst
+    [117952] = true; --CracklingJadeLightning
+    [322109] = true; --TouchOfDeath
+};
+
 function MaxDps:OnInitialize()
 	self.db = LibStub('AceDB-3.0'):New('MaxDpsOptions', self.defaultOptions);
 
@@ -162,6 +177,7 @@ function MaxDps:OnEnable()
 
 	if not self.playerUnitFrame then
 		self.spellHistory = {};
+		self.spellCombo = {};
 
 		self.playerUnitFrame = CreateFrame('Frame');
 		self.playerUnitFrame:RegisterUnitEvent('UNIT_SPELLCAST_SUCCEEDED', 'player');
@@ -172,6 +188,14 @@ function MaxDps:OnEnable()
 
 				if #self.spellHistory > 5 then
 					TableRemove(self.spellHistory);
+				end
+			end
+			
+			if IsPlayerSpell(spellId) and spellHitComboList[spellId] then
+					TableInsert(self.spellCombo, 1, spellId);
+				
+				if #self.spellCombo > 2 then
+					TableRemove(self.spellCombo);
 				end
 			end
 		end);
