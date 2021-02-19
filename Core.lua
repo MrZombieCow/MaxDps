@@ -283,6 +283,7 @@ function MaxDps:PrepareFrameData()
 	self.FrameData.covenant = self.CovenantInfo;
 	self.FrameData.runeforge = self.LegendaryBonusIds;
 	self.FrameData.spellHistory = self.spellHistory;
+	self.FrameData.spellCombo = self.spellCombo;
 	self.FrameData.timeToDie = self:GetTimeToDie();
 end
 
